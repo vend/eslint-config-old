@@ -1,0 +1,11 @@
+{
+  "name": "@vendhq/eslint-config",
+  "version": "1.0.0",
+  "description": "ESLint configuration for Vend",
+  "main": "index.js",
+  "repository": "https://github.com/vend/eslint-config",
+  "license": "MIT",
+  "dependencies": {
+    "eslint-config-standard": "^12.0.0"
+  }
+}
