@@ -5,7 +5,9 @@
   "main": "index.js",
   "repository": "https://github.com/vend/eslint-config",
   "license": "MIT",
-  "dependencies": {
-    "eslint-config-standard": "^12.0.0"
+  "peerDependencies": {
+    "eslint-config-standard": "^12.0.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-prettier": "^3.0.1"
   }
 }
