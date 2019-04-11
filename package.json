@@ -6,6 +6,7 @@
   "repository": "https://github.com/vend/eslint-config",
   "license": "MIT",
   "peerDependencies": {
+    "@typescript-eslint/eslint-plugin": "^1.6.0",
     "eslint-config-prettier": "^4.1.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-config-standard-react": "^7.0.2",
