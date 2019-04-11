@@ -176,7 +176,7 @@ module.exports = {
       // Prefer ES6-style imports over 'require'.
       '@typescript-eslint/no-var-requires': 'error',
 
-      // Prefer functiopn types over callable interface types with no other members.
+      // Prefer function types over callable interface types with no other members.
       '@typescript-eslint/prefer-function-type': 'error',
 
       // Prefer interfaces over type literals (type T = { ... }).
