@@ -11,5 +11,8 @@
     "eslint-config-standard": "^12.0.0",
     "eslint-config-standard-react": "^7.0.2",
     "eslint-plugin-prettier": "^3.0.1"
+  },
+  "dependencies": {
+    "confusing-browser-globals": "^1.0.6"
   }
 }
