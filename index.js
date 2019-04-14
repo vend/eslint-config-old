@@ -15,9 +15,6 @@ module.exports = {
     'prettier/standard',
   ],
   rules: {
-    // Prefer () => 0 over () => { return 0 }.
-    'arrow-body-style': 'error',
-
     // Prefer foo.bar over foo['bar'].
     'dot-notation': 'error',
 
@@ -58,9 +55,6 @@ module.exports = {
     // Have a convention around import order.
     'import/order': 'error',
 
-    // Prefer arrow functions when passing callbacks.
-    'prefer-arrow-callback': 'error',
-
     // Require that code be formatted according to Prettier rules.
     'prettier/prettier': [
       'error',
@@ -78,7 +72,7 @@ module.exports = {
   overrides: [
     // Relax certain rules for tests.
     {
-      files: ['**/*.test.*'],
+      files: ['**/*.po.*', '**/*.spec.*', '**/*.test.*'],
       env: {
         jest: true,
         mocha: true,
