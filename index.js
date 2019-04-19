@@ -96,6 +96,11 @@ module.exports = {
       },
 
       rules: {
+        // This rule has issues with the TypeScript parser, but tsc catches
+        // these sorts of errors anyway.
+        // See: https://github.com/typescript-eslint/typescript-eslint/issues/342
+        'no-undef': 'off',
+
         // Require overloads to be grouped together
         '@typescript-eslint/adjacent-overload-signatures': 'error',
 
