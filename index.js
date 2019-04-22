@@ -101,6 +101,9 @@ module.exports = {
         // See: https://github.com/typescript-eslint/typescript-eslint/issues/342
         'no-undef': 'off',
 
+        // Conflicts with TypeScript's noImplicitReturns option.
+        'no-useless-return': 'off',
+
         // Require overloads to be grouped together
         '@typescript-eslint/adjacent-overload-signatures': 'error',
 
