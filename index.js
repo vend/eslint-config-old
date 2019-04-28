@@ -72,11 +72,15 @@ module.exports = {
   overrides: [
     // Relax certain rules for tests.
     {
-      files: ['**/*.po.*', '**/*.spec.*', '**/*.test.*'],
+      files: ['./cypress/**', '**/*.po.*', '**/*.spec.*', '**/*.test.*'],
       env: {
         jest: true,
         mocha: true,
       },
+      globals: {
+        cy: 'readable',
+        Cypress: 'readable',
+      }
 
       rules: {
         'no-console': 'off',
