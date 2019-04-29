@@ -80,7 +80,7 @@ module.exports = {
       globals: {
         cy: 'readable',
         Cypress: 'readable',
-      }
+      },
 
       rules: {
         'no-console': 'off',
