@@ -1,11 +1,16 @@
-const prettierConfig = require('./prettier.config')
 const restrictedGlobals = require('confusing-browser-globals')
+const prettierConfig = require('./prettier.config')
 
 module.exports = {
   env: {
     browser: true,
   },
-  plugins: ['@typescript-eslint', 'prettier'],
+  plugins: ['@typescript-eslint', 'jsx-a11y', 'prettier', 'react-hooks'],
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
   extends: [
     'standard',
     'standard-react',
@@ -23,6 +28,10 @@ module.exports = {
 
     // Disallow empty conditional and loop bodies.
     'no-empty': 'error',
+
+    // Don't allow Object prototype built-ins.
+    // Standard turns this on but it doesn't seem very useful.
+    'no-prototype-builtins': 'off',
 
     // Disallow browser globals with generic names like 'event' and 'name'.
     'no-restricted-globals': ['error'].concat(restrictedGlobals),
@@ -55,6 +64,32 @@ module.exports = {
     // Have a convention around import order.
     'import/order': 'error',
 
+    // jsx-a11y rules copied from create-react-app.
+    // TODO: We should aim to gradually enable more of these over time.
+    'jsx-a11y/accessible-emoji': 'error',
+    // 'jsx-a11y/alt-text': 'error',
+    'jsx-a11y/anchor-has-content': 'error',
+    // 'jsx-a11y/anchor-is-valid': [
+    //   'error',
+    //   {
+    //     aspects: ['noHref', 'invalidHref'],
+    //   },
+    // ],
+    // 'jsx-a11y/aria-activedescendant-has-tabindex': 'error',
+    // 'jsx-a11y/aria-props': 'error',
+    // 'jsx-a11y/aria-proptypes': 'error',
+    // 'jsx-a11y/aria-role': ['error', { ignoreNonDOM: true }],
+    // 'jsx-a11y/aria-unsupported-elements': 'error',
+    // 'jsx-a11y/heading-has-content': 'error',
+    // 'jsx-a11y/iframe-has-title': 'error',
+    // 'jsx-a11y/img-redundant-alt': 'error',
+    // 'jsx-a11y/no-access-key': 'error',
+    // 'jsx-a11y/no-distracting-elements': 'error',
+    // 'jsx-a11y/no-redundant-roles': 'error',
+    // 'jsx-a11y/role-has-required-aria-props': 'error',
+    // 'jsx-a11y/role-supports-aria-props': 'error',
+    // 'jsx-a11y/scope': 'error',
+
     // Require that code be formatted according to Prettier rules.
     'prettier/prettier': [
       'error',
@@ -65,8 +100,17 @@ module.exports = {
       },
     ],
 
+    // Don't require event handlers to be prefixed with "handle".
+    'react/jsx-handler-names': 'off',
+
     // We use TypeScript so don't usually need PropTypes.
     'react/prop-types': 'off',
+
+    // Prevent stale closures in useEffect, useCallback, etc.
+    'react-hooks/exhaustive-deps': 'error',
+
+    // Enforce the Rules of Hooks.
+    'react-hooks/rules-of-hooks': 'error',
   },
 
   overrides: [
@@ -105,6 +149,9 @@ module.exports = {
         // See: https://github.com/typescript-eslint/typescript-eslint/issues/342
         'no-undef': 'off',
 
+        'no-useless-constructor': 'off',
+        '@typescript-eslint/no-useless-constructor': 'error',
+
         // Conflicts with TypeScript's noImplicitReturns option.
         'no-useless-return': 'off',
 
@@ -112,7 +159,7 @@ module.exports = {
         '@typescript-eslint/adjacent-overload-signatures': 'error',
 
         // Use T[] over Array<T> for simple types
-        '@typescript-eslint/array-type': ['error', 'array-simple'],
+        '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
 
         // Prevent use of certain types that are almost always mistakes.
         '@typescript-eslint/ban-types': [
@@ -155,9 +202,24 @@ module.exports = {
         camelcase: 'off',
         '@typescript-eslint/camelcase': ['error', { properties: 'never' }],
 
-        // TODO: enable once a new typescript-eslint release is cut and we can exclude constructors, like TSLint.
+        // Require 'as' type assertions.
+        '@typescript-eslint/consistent-type-assertions': [
+          'error',
+          { assertionStyle: 'as' },
+        ],
+
+        // Prefer interfaces over type literals (type T = { ... }).
+        '@typescript-eslint/consistent-type-definitions': [
+          'error',
+          'interface',
+        ],
+
         // Require fields and methods to be explicitly labeled public, private, or protected.
-        // '@typescript-eslint/explicit-member-accessibility': 'error',
+        // Exclude public constructors.
+        '@typescript-eslint/explicit-member-accessibility': [
+          'error',
+          { overrides: { constructors: 'no-public' } },
+        ],
 
         // Require consistent ordering of fields, methods, and constructors.
         '@typescript-eslint/member-ordering': [
@@ -177,23 +239,11 @@ module.exports = {
           },
         ],
 
-        // Require 'as' type assertions.
-        '@typescript-eslint/no-angle-bracket-type-assertion': 'error',
-
         // Disallow empty interfaces, which are not useful.
         '@typescript-eslint/no-empty-interface': 'error',
 
         // Disallow invalid declarations of constructors on interfaces and 'new' methods on classes.
         '@typescript-eslint/no-misused-new': 'error',
-
-        // Don't allow modules or namespaces, except in declaration files.
-        '@typescript-eslint/no-namespace': [
-          'error',
-          { allowDefinitionFiles: true },
-        ],
-
-        // Use import instead of triple-slash reference comments.
-        '@typescript-eslint/no-triple-slash-reference': 'error',
 
         // TypeScript-aware unused variable rule.
         'no-unused-vars': 'off',
@@ -213,8 +263,8 @@ module.exports = {
         // Prefer function types over callable interface types with no other members.
         '@typescript-eslint/prefer-function-type': 'error',
 
-        // Prefer interfaces over type literals (type T = { ... }).
-        '@typescript-eslint/prefer-interface': 'error',
+        // Prefer import instead of triple-slash reference comments.
+        '@typescript-eslint/triple-slash-reference': 'error',
 
         // Warn when two overloads could be combined into one.
         '@typescript-eslint/unified-signatures': 'error',
