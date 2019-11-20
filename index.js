@@ -144,6 +144,10 @@ module.exports = {
       },
 
       rules: {
+        // Checked by TypeScript and creates false positives with class method
+        // overloads.
+        'no-dupe-class-members': 'off',
+
         // This rule has issues with the TypeScript parser, but tsc catches
         // these sorts of errors anyway.
         // See: https://github.com/typescript-eslint/typescript-eslint/issues/342
