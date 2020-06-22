@@ -55,40 +55,92 @@ module.exports = {
     // Require the radix argument to parseInt to avoid unintentionally allowing hex or octal.
     radix: 'error',
 
-    // Require PascalCased class names.
-    '@typescript-eslint/class-name-casing': 'error',
+    // Naming conventions. The TypeScript rule is much more complete and configurable than ESLint's.
+    camelcase: 'off',
+    '@typescript-eslint/naming-convention': [
+      'error',
+      {
+        selector: 'default',
+        format: ['camelCase'],
+        leadingUnderscore: 'allow',
+        trailingUnderscore: 'allow',
+      },
+      {
+        selector: 'variable',
+        // Allow PascalCase for React components, UPPER_CASE for constants.
+        format: ['camelCase', 'PascalCase', 'UPPER_CASE'],
+        leadingUnderscore: 'allow',
+        trailingUnderscore: 'allow',
+      },
+      {
+        selector: 'function',
+        // Allow PascalCase for React components.
+        format: ['camelCase', 'PascalCase'],
+        leadingUnderscore: 'allow',
+        trailingUnderscore: 'allow',
+      },
+      // Don't require object properties to conform to any convention.
+      {
+        selector: 'property',
+        format: null,
+      },
+      // However, require class members to be camelCase.
+      {
+        selector: 'memberLike',
+        modifiers: ['private', 'protected', 'public'],
+        format: ['camelCase'],
+      },
+      // Types should be PascalCase.
+      {
+        selector: 'typeLike',
+        format: ['PascalCase'],
+      },
+      // But sometimes we use enums like consts, especially when converting from JS.
+      {
+        selector: 'enum',
+        format: ['PascalCase', 'UPPER_CASE'],
+      },
+      {
+        selector: 'enumMember',
+        format: ['camelCase', 'PascalCase', 'UPPER_CASE'],
+        leadingUnderscore: 'allow',
+        trailingUnderscore: 'allow',
+      },
+    ],
 
     // Require imports to be first in the file, as they're hoisted.
     'import/first': 'error',
+
+    // Don't allow default exports.
+    'import/no-default-export': 'error',
 
     // Have a convention around import order.
     'import/order': 'error',
 
     // jsx-a11y rules copied from create-react-app.
-    // TODO: We should aim to gradually enable more of these over time.
     'jsx-a11y/accessible-emoji': 'error',
-    // 'jsx-a11y/alt-text': 'error',
+    'jsx-a11y/alt-text': 'error',
     'jsx-a11y/anchor-has-content': 'error',
-    // 'jsx-a11y/anchor-is-valid': [
-    //   'error',
-    //   {
-    //     aspects: ['noHref', 'invalidHref'],
-    //   },
-    // ],
-    // 'jsx-a11y/aria-activedescendant-has-tabindex': 'error',
-    // 'jsx-a11y/aria-props': 'error',
-    // 'jsx-a11y/aria-proptypes': 'error',
-    // 'jsx-a11y/aria-role': ['error', { ignoreNonDOM: true }],
-    // 'jsx-a11y/aria-unsupported-elements': 'error',
-    // 'jsx-a11y/heading-has-content': 'error',
-    // 'jsx-a11y/iframe-has-title': 'error',
-    // 'jsx-a11y/img-redundant-alt': 'error',
-    // 'jsx-a11y/no-access-key': 'error',
-    // 'jsx-a11y/no-distracting-elements': 'error',
-    // 'jsx-a11y/no-redundant-roles': 'error',
-    // 'jsx-a11y/role-has-required-aria-props': 'error',
-    // 'jsx-a11y/role-supports-aria-props': 'error',
-    // 'jsx-a11y/scope': 'error',
+    'jsx-a11y/anchor-is-valid': [
+      'error',
+      {
+        aspects: ['noHref', 'invalidHref'],
+      },
+    ],
+    'jsx-a11y/aria-activedescendant-has-tabindex': 'error',
+    'jsx-a11y/aria-props': 'error',
+    'jsx-a11y/aria-proptypes': 'error',
+    'jsx-a11y/aria-role': ['error', { ignoreNonDOM: true }],
+    'jsx-a11y/aria-unsupported-elements': 'error',
+    'jsx-a11y/heading-has-content': 'error',
+    'jsx-a11y/iframe-has-title': 'error',
+    'jsx-a11y/img-redundant-alt': 'error',
+    'jsx-a11y/no-access-key': 'error',
+    'jsx-a11y/no-distracting-elements': 'error',
+    'jsx-a11y/no-redundant-roles': 'error',
+    'jsx-a11y/role-has-required-aria-props': 'error',
+    'jsx-a11y/role-supports-aria-props': 'error',
+    'jsx-a11y/scope': 'error',
 
     // Require that code be formatted according to Prettier rules.
     'prettier/prettier': [
@@ -165,46 +217,50 @@ module.exports = {
         // Use T[] over Array<T> for simple types
         '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
 
-        // Prevent use of certain types that are almost always mistakes.
+        // Prevent use of certain types that are almost always mistakes or have better alternatives.
+        // This configuration is based on the default, but excludes '{}' and 'object'.
         '@typescript-eslint/ban-types': [
           'error',
           {
             types: {
-              Boolean: {
-                fixWith: 'boolean',
-                message:
-                  'Avoid using the `Boolean` type. Did you mean `boolean`?',
+              String: {
+                message: 'Use string instead',
+                fixWith: 'string',
               },
-              Function: {
-                message:
-                  'Avoid using the `Function` type. Prefer a specific function type like `() => void`.',
+              Boolean: {
+                message: 'Use boolean instead',
+                fixWith: 'boolean',
               },
               Number: {
+                message: 'Use number instead',
                 fixWith: 'number',
-                message:
-                  'Avoid using the `Number` type. Did you mean `number`?',
-              },
-              Object: {
-                message:
-                  'Avoid using the `Object` type. Did you mean `object`?',
-              },
-              String: {
-                fixWith: 'string',
-                message:
-                  'Avoid using the `String` type. Did you mean `string`?',
               },
               Symbol: {
+                message: 'Use symbol instead',
                 fixWith: 'symbol',
-                message:
-                  'Avoid using the `Symbol` type. Did you mean `symbol`?',
+              },
+
+              Function: {
+                message: [
+                  'The `Function` type accepts any function-like value.',
+                  'It provides no type safety when calling the function, which can be a common source of bugs.',
+                  'It also accepts things like class declarations, which will throw at runtime as they will not be called with `new`.',
+                  'If you are expecting the function to accept certain arguments, you should explicitly define the function shape.',
+                ].join('\n'),
+              },
+
+              // object typing
+              Object: {
+                message: [
+                  'The `Object` type actually means "any non-nullish value", so it is marginally better than `unknown`.',
+                  '- If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.',
+                  '- If you want a type meaning "any value", you probably want `unknown` instead.',
+                ].join('\n'),
               },
             },
+            extendDefaults: false,
           },
         ],
-
-        // Require camelCase names, except for property names.
-        camelcase: 'off',
-        '@typescript-eslint/camelcase': ['error', { properties: 'never' }],
 
         // Require 'as' type assertions.
         '@typescript-eslint/consistent-type-assertions': [
@@ -242,6 +298,14 @@ module.exports = {
             ],
           },
         ],
+
+        // Prefer array literals over the array constructor.
+        'no-array-constructor': 'off',
+        '@typescript-eslint/no-array-constructor': 'error',
+
+        // Don't allow extra semi-colons.
+        'no-extra-semi': 'off',
+        '@typescript-eslint/no-extra-semi': 'error',
 
         // Disallow empty interfaces, which are not useful.
         '@typescript-eslint/no-empty-interface': 'error',
