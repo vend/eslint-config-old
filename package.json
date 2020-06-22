@@ -3,6 +3,11 @@
   "version": "3.0.1",
   "description": "ESLint configuration for Vend",
   "main": "index.js",
+  "files": [
+    "index.js",
+    "prettier.config.js",
+    ".eslintrc.js"
+  ],
   "repository": "https://github.com/vend/eslint-config",
   "license": "MIT",
   "scripts": {
