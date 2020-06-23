@@ -1,6 +1,6 @@
 {
   "name": "@vendhq/eslint-config",
-  "version": "3.0.1",
+  "version": "5.0.0",
   "description": "ESLint configuration for Vend",
   "main": "index.js",
   "files": [
