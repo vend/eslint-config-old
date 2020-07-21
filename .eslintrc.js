@@ -168,7 +168,13 @@ module.exports = {
   overrides: [
     // Relax certain rules for tests.
     {
-      files: ['cypress/**', '**/*.po.*', '**/*.spec.*', '**/*.test.*'],
+      files: [
+        'cypress/**',
+        '**/*.po.*',
+        '**/*.spec.*',
+        '**/*.test.*',
+        '**/*.stories.*',
+      ],
       env: {
         jest: true,
         mocha: true,
@@ -180,6 +186,7 @@ module.exports = {
 
       rules: {
         'no-console': 'off',
+        'import/no-default-export': 'off',
       },
     },
 
