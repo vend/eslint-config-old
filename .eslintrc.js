@@ -166,6 +166,14 @@ module.exports = {
   },
 
   overrides: [
+    // Relax certain rules for storybooks.
+    {
+      files: ['**/*.stories.*'],
+      rules: {
+        'import/no-default-export': 'off',
+      },
+    },
+
     // Relax certain rules for tests.
     {
       files: ['cypress/**', '**/*.po.*', '**/*.spec.*', '**/*.test.*'],
