@@ -8,7 +8,7 @@ module.exports = {
   plugins: ['@typescript-eslint', 'jsx-a11y', 'prettier', 'react-hooks'],
   settings: {
     react: {
-      version: 'detect',
+      version: 'latest',
     },
   },
   extends: [
@@ -43,8 +43,8 @@ module.exports = {
     // Don't allow unused labels.
     'no-unused-labels': 'off',
 
-    // Disallow the 'var' keyword.
-    'no-var': 'error',
+    // Disabled because it's more annoying than useful with TypeScript.
+    'no-use-before-define': 'off',
 
     // Prefer ES6 shorthand notation in object literals.
     'object-shorthand': 'error',
@@ -54,59 +54,6 @@ module.exports = {
 
     // Require the radix argument to parseInt to avoid unintentionally allowing hex or octal.
     radix: 'error',
-
-    // Naming conventions. The TypeScript rule is much more complete and configurable than ESLint's.
-    camelcase: 'off',
-    '@typescript-eslint/naming-convention': [
-      'error',
-      {
-        selector: 'default',
-        format: ['camelCase'],
-        leadingUnderscore: 'allow',
-        trailingUnderscore: 'allow',
-      },
-      {
-        selector: 'variable',
-        // Allow PascalCase for React components, UPPER_CASE for constants.
-        format: ['camelCase', 'PascalCase', 'UPPER_CASE'],
-        leadingUnderscore: 'allow',
-        trailingUnderscore: 'allow',
-      },
-      {
-        selector: 'function',
-        // Allow PascalCase for React components.
-        format: ['camelCase', 'PascalCase'],
-        leadingUnderscore: 'allow',
-        trailingUnderscore: 'allow',
-      },
-      // Don't require object properties to conform to any convention.
-      {
-        selector: 'property',
-        format: null,
-      },
-      // However, require class members to be camelCase.
-      {
-        selector: 'memberLike',
-        modifiers: ['private', 'protected', 'public'],
-        format: ['camelCase'],
-      },
-      // Types should be PascalCase.
-      {
-        selector: 'typeLike',
-        format: ['PascalCase'],
-      },
-      // But sometimes we use enums like consts, especially when converting from JS.
-      {
-        selector: 'enum',
-        format: ['PascalCase', 'UPPER_CASE'],
-      },
-      {
-        selector: 'enumMember',
-        format: ['camelCase', 'PascalCase', 'UPPER_CASE'],
-        leadingUnderscore: 'allow',
-        trailingUnderscore: 'allow',
-      },
-    ],
 
     // Require imports to be first in the file, as they're hoisted.
     'import/first': 'error',
@@ -156,6 +103,7 @@ module.exports = {
     'react/jsx-handler-names': 'off',
 
     // We use TypeScript so don't usually need PropTypes.
+    'react/no-unused-prop-types': 'off',
     'react/prop-types': 'off',
 
     // Prevent stale closures in useEffect, useCallback, etc.
@@ -204,6 +152,65 @@ module.exports = {
       },
 
       rules: {
+        // Naming conventions. The TypeScript rule is much more complete and configurable than ESLint's.
+        camelcase: 'off',
+        '@typescript-eslint/naming-convention': [
+          'error',
+          {
+            selector: 'default',
+            format: ['camelCase'],
+            leadingUnderscore: 'allow',
+            trailingUnderscore: 'allow',
+          },
+          {
+            selector: 'variable',
+            // Allow PascalCase for React components, UPPER_CASE for constants.
+            format: ['camelCase', 'PascalCase', 'UPPER_CASE'],
+            leadingUnderscore: 'allow',
+            trailingUnderscore: 'allow',
+          },
+          {
+            selector: 'function',
+            // Allow PascalCase for React components.
+            format: ['camelCase', 'PascalCase'],
+            leadingUnderscore: 'allow',
+            trailingUnderscore: 'allow',
+          },
+          // Don't require destructured names to conform to any convention.
+          {
+            selector: 'default',
+            modifiers: ['destructured'],
+            format: null,
+          },
+          // Don't require object properties to conform to any convention.
+          {
+            selector: 'property',
+            format: null,
+          },
+          // However, require class members to be camelCase.
+          {
+            selector: 'memberLike',
+            modifiers: ['private', 'protected', 'public'],
+            format: ['camelCase'],
+          },
+          // Types should be PascalCase.
+          {
+            selector: 'typeLike',
+            format: ['PascalCase'],
+          },
+          // But sometimes we use enums like consts, especially when converting from JS.
+          {
+            selector: 'enum',
+            format: ['PascalCase', 'UPPER_CASE'],
+          },
+          {
+            selector: 'enumMember',
+            format: ['camelCase', 'PascalCase', 'UPPER_CASE'],
+            leadingUnderscore: 'allow',
+            trailingUnderscore: 'allow',
+          },
+        ],
+
         // Checked by TypeScript and creates false positives with class method
         // overloads.
         'no-dupe-class-members': 'off',
@@ -276,12 +283,6 @@ module.exports = {
           { assertionStyle: 'as' },
         ],
 
-        // Prefer interfaces over type literals (type T = { ... }).
-        '@typescript-eslint/consistent-type-definitions': [
-          'error',
-          'interface',
-        ],
-
         // Require fields and methods to be explicitly labeled public, private, or protected.
         // Exclude public constructors.
         '@typescript-eslint/explicit-member-accessibility': [
@@ -310,10 +311,6 @@ module.exports = {
         // Prefer array literals over the array constructor.
         'no-array-constructor': 'off',
         '@typescript-eslint/no-array-constructor': 'error',
-
-        // Don't allow extra semi-colons.
-        'no-extra-semi': 'off',
-        '@typescript-eslint/no-extra-semi': 'error',
 
         // Disallow empty interfaces, which are not useful.
         '@typescript-eslint/no-empty-interface': 'error',
