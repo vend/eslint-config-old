@@ -8,7 +8,7 @@
     "prettier.config.js",
     ".eslintrc.js"
   ],
-  "repository": "https://github.com/vend/eslint-config",
+  "repository": "https://github.com/vend/eslint-config-old",
   "license": "MIT",
   "scripts": {
     "lint": "eslint . --config=index.js",
