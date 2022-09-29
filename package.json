@@ -1,5 +1,5 @@
 {
-  "name": "@vendhq/eslint-config",
+  "name": "@vend/eslint-config-old",
   "version": "6.0.0",
   "description": "ESLint configuration for Vend",
   "main": "index.js",
@@ -8,7 +8,6 @@
     "prettier.config.js",
     ".eslintrc.js"
   ],
-  "repository": "https://github.com/vend/eslint-config-old",
   "license": "MIT",
   "scripts": {
     "lint": "eslint . --config=index.js",
